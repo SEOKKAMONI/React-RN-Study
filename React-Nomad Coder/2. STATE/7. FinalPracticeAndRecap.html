@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>State Practice part One</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const root = document.getElementById("root");
+
+    function MinutesToHours() {
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
+
+        function onChange(event) {
+            setAmount(event.target.value);
+        };
+
+        function reset() {
+            setAmount(0);
+        };
+
+        function onFlip() {
+            reset();
+            setFlipped((current) => !current);
+            // flipped가 true면 false를 반환 , false면 true를 반환
+            // 반대의 값을 내놓음
+        };
+
+        return (
+            <div>
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input
+                        value={flipped ? Math.round(amount * 60) : amount}
+                        // flipped 가 false 인 상태이면 입력이 가능한상태이니 변환하지말고 현재값을 보여주자
+                        id="minutes"
+                        placeholder="Minutes"
+                        type="number"
+                        onChange={onChange}
+                        disabled={flipped} // flipped 가 true이면 false 
+                    // disabled은 true이면 입력 불가능한 상태 flase이면 가능한 상태이다
+                    />
+                </div>
+                <div>
+                    <label htmlFor="hour">Hours</label>
+                    <input
+                        value={flipped ? amount : Math.round(amount / 60)}
+                        // flipped 가 true이면 입력이 가능하니 현재의 값만 보여주고 변환하지 마라
+                        id="hour"
+                        placeholder="Hours"
+                        type="number"
+                        disabled={!flipped} // flipped 가 false 이면 true , true 이면 false
+                        // disabled은 true이면 입력 불가능한 상태 flase이면 가능한 상태이다
+                        onChange={onChange}
+                    />
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>Flip</button>
+            </div>
+        );
+    }
+    function KmToMiles() {
+        return <h3>KM 2 M</h3>;
+    }
+    function App() {
+        const [index, setIndex] = React.useState("xx");
+        // index는 데이터 setIndex는 index를 수정하는 데이터
+        const onSelect = (event) => {
+            setIndex(event.target.value); // select 에 동작이 감지 되면 선택한 옵션에 값을 불러와줌
+            // 값은 아래에 select value를 보시다 시피 index에 저장됨
+            // 그러곤 값에 따라 컴포넌트를 불러와 화면에 보여줌
+            // 즉 사용자가 선택한 옵션에 따라 컴포넌트를 번갈아 가며 보여줄수 있는것
+        }
+        console.log("render w/", index)
+        return (
+            <div>
+                <h1>Super Converter</h1>
+                <select value={index} onChange={onSelect}> 
+                    <option value="xx">Select your units</option>
+                    <option value="0">Minutes & Hours</option>
+                    <option value="1">Km & Miles</option>
+                </select>
+                <hr />
+                {index === "xx" ? "Please select your units" : null} 
+                {index === "0" ? <MinutesToHours /> : null} 
+                {index === "1" ? <KmToMiles /> : null}
+            </div>
+        );
+    }
+
+    ReactDOM.render(<App />, root);
+</script>
+
+</html>
