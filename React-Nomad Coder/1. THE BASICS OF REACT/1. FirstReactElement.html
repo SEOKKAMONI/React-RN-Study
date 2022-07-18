@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>First React Element</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script>
+    const root = document.getElementById("root");
+    const span = React.createElement(
+        "span", // span 태그 생성
+        { 
+            id: "sexy-span", 
+            style: { color : "red" } 
+        }, // 만든 span 태그에 property 추가
+        "Hello I'm a span" // 안에 내용 추가
+    ); 
+    ReactDOM.render(span, root); // react dom은 우리가 생성 element를 HTML에 두는 역할을 함
+    // ReactDOM.render(무엇을, 어디 안에); 
+</script>
+</html>
