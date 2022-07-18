@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>Understanding State</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const root = document.getElementById("root");
+    let counter = 0;
+
+    function countUp() {
+        counter = counter + 1;
+        redner()
+        // 새로고침하지 않으면 UI에 counter 값이 적용이 안돼니깐 
+        // 클릭할때마다 render 함수를 불러와 적용시켜주는 방식
+    }
+
+    function redner() {
+        ReactDOM.render(<Container />, root); // react dom은 우리가 생성 element를 HTML에 두는 역할을 함
+    // ReactDOM.render(무엇을, 어디 안에);
+    }
+
+    function Container() {
+        return (
+            <div>
+                <h3>Total clicks: {counter}</h3>
+                <button onClick={countUp} >Click me</button>
+            </div>
+        );
+    }
+
+    redner() 
+</script>
+
+</html>

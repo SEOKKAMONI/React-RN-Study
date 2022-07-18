@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>Props</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    function Btn(Props) {
+        console.log(Props) // 아래 선언했던 Btn 두개에 오브젝트에 정보가 나옴
+        return <button 
+        style={{
+            backgroundColor: "tomato",
+            color: "white",
+            padding: "10px 20px",
+            border: 0,
+            borderRadius: 10,
+            fontSize: Props.big ? 18 : 16,
+        }}>{Props.banana}</button>
+    }
+    // props 는 컴포넌트에 속해있는 오브젝트들을 다 가지고 와준다
+    // 컴포넌트 이름이 <Btn text="대박"/> 이라 했을때
+    // function Btn(props) { console.log(props) } 라고 치면 
+    // <Btn text="대박"/>에 있는 오브젝트 정보들을 다 가져와준다
+    function App() {
+        return (
+            <div>
+                <Btn banana="Save Changes" big = {true}/>
+                <Btn banana="Continue" big = {false}/>
+            </div>
+        );
+    }
+
+    const root = document.getElementById("root");
+    ReactDOM.render(<App />, root);
+</script>
+
+</html>
