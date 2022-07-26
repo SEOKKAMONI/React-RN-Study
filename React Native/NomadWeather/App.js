@@ -1,5 +1,9 @@
 import react from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { ScrollView, Dimensions} from 'react-native-web';
+
+const { width:SCREEN_WIDTH } = Dimensions.get("window"); 
+// 사용자가 쓰는 디바이스 가로의 길이를 가져와줌
 
 export default function App() {
   // view 는 기본적으로 Flex Container 
@@ -13,12 +17,31 @@ export default function App() {
       <View style={styles.city}>
         <Text style={styles.cityName}>Seoul</Text>
       </View>
-      <View style={styles.weather}>
+      <ScrollView 
+        pagingEnabled // 가로 스크롤을 좀더 끈끈하게 해주는 props
+        horizontal // 스크롤뷰를 가로로 설정하는 props
+        contentContainerStyle={styles.weather}
+        showsVerticalScrollIndicator = {false} // 스크롤시 생기는 스크롤바를 없애주는 props
+      >
+
         <View style={styles.day}>
           <Text style={styles.temp}>27</Text>
           <Text style={styles.description}>Sunny</Text>
         </View>
-      </View>
+        <View style={styles.day}>
+          <Text style={styles.temp}>27</Text>
+          <Text style={styles.description}>Sunny</Text>
+        </View>
+        <View style={styles.day}>
+          <Text style={styles.temp}>27</Text>
+          <Text style={styles.description}>Sunny</Text>
+        </View>
+        <View style={styles.day}>
+          <Text style={styles.temp}>27</Text>
+          <Text style={styles.description}>Sunny</Text>
+        </View>
+        
+      </ScrollView>
     </View>
   );
 }
@@ -34,14 +57,13 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   cityName: {
-    fontSize: 68,
+    fontSize: 58,
     fontWeight: "500"
   },  
   weather: {
-    flex: 3,
   },
   day: {
-    flex: 1,
+    width: SCREEN_WIDTH,
     alignItems: "center",
   },
   temp: {
