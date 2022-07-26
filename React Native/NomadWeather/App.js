@@ -1,6 +1,9 @@
-import react from 'react';
+import react, { useEffect, useState } from 'react';
+import * as Location from "expo-location"
 import { View, StyleSheet, Text } from 'react-native';
 import { ScrollView, Dimensions} from 'react-native-web';
+
+// AIzaSyDm7Acp7tm_hfWjOTwUw33abNMaprgxcGU
 
 const { width:SCREEN_WIDTH } = Dimensions.get("window"); 
 // 사용자가 쓰는 디바이스 가로의 길이를 가져와줌
@@ -11,11 +14,27 @@ export default function App() {
 
   // 레이아웃을 짤때는 폰마다 크기가 다르기에 width, height로 px을 주어서 짜는것이 아닌
   // flex 로 비율을 준다
+  const [city, setCity] = useState("Loading...");
+  const [location, setLocation] = useState();
+  const [ok, setOk] = useState(true);
+  const ask = async() => {
+    const {granted} = await Location.requestForegroundPermissionsAsync();
+    if(!granted) {
+      setOk(false);
+    }
+    const {coords: {latitude, longitude}} = await Location.getCurrentPositionAsync({accuracy:5});
+    const location = await Location.reverseGeocodeAsync({latitude, longitude}, {useGoogleMaps:false})
+    setCity(location[0].city);
+  }
+
+  useEffect(() => {
+    ask();
+  }, [])
 
   return (
     <View style={styles.container}>
       <View style={styles.city}>
-        <Text style={styles.cityName}>Seoul</Text>
+        <Text style={styles.cityName}>{city}</Text>
       </View>
       <ScrollView 
         pagingEnabled // 가로 스크롤을 좀더 끈끈하게 해주는 props
